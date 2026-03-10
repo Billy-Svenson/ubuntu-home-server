@@ -1,0 +1,13 @@
+# Never commit these
+.env
+*.key
+*.crt
+*.pem
+
+# Backup files
+*.tar.gz
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,36 @@
+###########################################################
+# /home/USER/monitoring/docker-compose.yml
+###########################################################
+
+name: monitoring
+services:
+
+  glances:
+    container_name: glances
+    image: nicolargo/glances:latest-full
+    restart: unless-stopped
+    pid: host
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /etc/os-release:/etc/os-release:ro
+    environment:
+      - GLANCES_OPT=-w
+    # Accessible at: http://YOUR_LAN_IP:61208
+    # network_mode: host required so Glances can read
+    # host-level hardware sensors (CPU temp, battery, etc.)
+
+  uptime-kuma:
+    container_name: uptime-kuma
+    image: louislam/uptime-kuma:latest
+    restart: unless-stopped
+    volumes:
+      - uptime-kuma-data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "3001:3001"
+    # Accessible at: http://YOUR_LAN_IP:3001
+
+volumes:
+  uptime-kuma-data:

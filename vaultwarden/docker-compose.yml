@@ -1,0 +1,37 @@
+name: vaultwarden
+services:
+  vaultwarden:
+    container_name: vaultwarden
+    image: vaultwarden/server:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DOMAIN=https://YOUR_TAILSCALE_HOST
+      - ROCKET_ADDRESS=0.0.0.0
+      - ROCKET_PORT=8080
+    volumes:
+      - vaultwarden-data:/data
+    networks:
+      - vaultwarden-net
+
+  nginx:
+    container_name: vaultwarden-nginx
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /var/lib/tailscale/certs:/certs:ro
+    depends_on:
+      - vaultwarden
+    networks:
+      - vaultwarden-net
+
+volumes:
+  vaultwarden-data:
+
+networks:
+  vaultwarden-net:
+    driver: bridge
