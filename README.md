@@ -30,7 +30,7 @@ Old laptop sitting on a shelf — Intel Celeron N4500, 7.6GB RAM, 256GB NVMe. Dr
 
 I'm behind CGNAT — my ISP doesn't give me a real public IP, so traditional port forwarding doesn't work at all. Tailscale solved this completely. It creates an encrypted WireGuard tunnel between my devices so they can talk to each other regardless of what network they're on.
 
-Ubuntu acts as a subnet router, which means any device connected to my Tailscale network can reach everything on my home LAN — including the router admin page at `YOUR_ROUTER_IP`.
+Ubuntu acts as a subnet router, which means any device connected to my Tailscale network can reach everything on my home LAN — including the router admin page at `192.168.1.1`.
 
 ---
 
